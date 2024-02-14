@@ -1,32 +1,26 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Header></Header>
+    <!-- 路由显示的位置 占位符-->
+    <router-view></router-view>
+    <!-- 是否显示footer组件 通过meta值判断 -->
+    <Footer v-show="$route.meta.isShow"></Footer>
   </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+import Header from '@/components/header/Header.vue'
+import Footer from '@/components/footer/Footer.vue'
+export default {
+  components: {
+    Header,
+    Footer
+  },
+  mounted() {
+    // 把数据请求放在根组件可以减少数据访问请求 因为根组件只加载一次
+    this.$store.dispatch('categoryList')
   }
 }
-</style>
+</script>
+
+<style lang="less" scoped></style>
